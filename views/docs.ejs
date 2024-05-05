@@ -404,8 +404,8 @@ const underEighteen = await Users.findMany({ age: { $lt: <span class="hljs-numbe
                 </table>
                 <h5 id="array-query-operators">Array Query Operators</h5>
                 <p>
-                    Array query operators (\$in, \$nin, and \$all) can be used
-                    in different scenarios.
+                    Array query operators ($in, $nin, and $all) can be used in
+                    different scenarios.
                 </p>
                 <p>Given dataset with the following signature:</p>
                 <pre><code class="lang-js">{
@@ -414,7 +414,7 @@ const underEighteen = await Users.findMany({ age: { $lt: <span class="hljs-numbe
     hobbies: <span class="hljs-built_in">string</span>[]
 }
 </code></pre>
-                <p>\$in:</p>
+                <p>$in:</p>
                 <pre><code class="lang-js">// gets users that have <span class="hljs-string">"Coding"</span> inside their hobbies<span class="hljs-built_in"> array
 </span>await Users.findMany({ hobbies: { $in: <span class="hljs-string">"Coding"</span> } });
 
@@ -424,7 +424,7 @@ await Users.findMany({ age: { $in: [19, 20, 21] } });
 // gets users that have either <span class="hljs-string">"Coding"</span><span class="hljs-built_in"> or </span><span class="hljs-string">"Swimming"</span> inside their hobbies<span class="hljs-built_in"> array
 </span>await Users.findMany({ hobbies: { $in: [<span class="hljs-string">"Coding"</span>, <span class="hljs-string">"Swimming"</span>] } });
 </code></pre>
-                <p>\$nin:</p>
+                <p>$nin:</p>
                 <pre><code class="lang-js">// gets users that DO NOT have <span class="hljs-string">"Coding"</span> inside their hobbies<span class="hljs-built_in"> array
 </span>await Users.findMany({ hobbies: { $nin: <span class="hljs-string">"Coding"</span> } });
 
@@ -434,7 +434,7 @@ await Users.findMany({ age: { $nin: [19, 20, 21] } });
 // gets users that DO NOT have <span class="hljs-string">"Coding"</span><span class="hljs-built_in"> and </span><span class="hljs-string">"Swimming"</span> inside their hobbies<span class="hljs-built_in"> array
 </span>await Users.findMany({ hobbies: { $nin: [<span class="hljs-string">"Coding"</span>, <span class="hljs-string">"Swimming"</span>] } });
 </code></pre>
-                <p>\$all:</p>
+                <p>$all:</p>
                 <pre><code class="lang-js">// gets users that have both <span class="hljs-string">"Coding"</span><span class="hljs-built_in"> and </span><span class="hljs-string">"Swimming"</span> inside their hobbies<span class="hljs-built_in"> array
 </span>await Users.findMany({ hobbies: { $all: [<span class="hljs-string">"Coding"</span>, <span class="hljs-string">"Swimming"</span>] } });
 </code></pre>
