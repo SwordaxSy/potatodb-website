@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en" class="docs">
+    <%- include("partials/head") %>
+    <body>
+        <!-- Header -->
+        <%- include("partials/header") %>
+
+        <!-- Main Page Content -->
+        <main>
+            <aside class="docs-menu"></aside>
+
+            <div class="docs-content">
+                <h2 id="installation">Installation</h2>
+                <pre><code>npm <span class="hljs-keyword">install</span> potatodb
+</code></pre>
+                <h2 id="usage">Usage</h2>
+                <h4 id="require">Require</h4>
+                <p>
+                    After installing PotatoDB via npm, require
+                    <code>setRoot</code> and <code>createDatabase</code> methods
+                    from the library.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> { setRoot, createDatabase } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"potatodb"</span>);
+</code></pre>
+                <p>or with ES6 import statement</p>
+                <pre><code class="lang-js"><span class="hljs-keyword">import</span> { setRoot, createDatabase } <span class="hljs-keyword">from</span> <span class="hljs-string">"potatodb"</span>;
+</code></pre>
+                <h4 id="setroot">setRoot</h4>
+                <p>
+                    The <code>setRoot()</code> method is used to define the
+                    location and the name of the databases directory, which will
+                    later host the databases. The method takes two arguments:
+                    first is the directory name <code>__dirname</code>, and
+                    second is the desired name of the databases directory
+                    (defaults to &quot;databases&quot;).
+                </p>
+                <pre><code class="lang-js">setRoot(<span class="hljs-name">__dirname</span>, <span class="hljs-string">"databases"</span>)<span class="hljs-comment">;</span>
+</code></pre>
+                <h4 id="createdatabase">createDatabase</h4>
+                <p>
+                    The <code>createDatabase()</code> method creates a database
+                    inside the databases directory, where farms (collections)
+                    will be contained. PotatoDB allows you to have multiple
+                    databases at the same time, all stored inside the databases
+                    directory. The <code>createDatabase()</code> method takes
+                    two arguments: first is the name of the database, and second
+                    is a boolean that specifies whether the database should be
+                    cleared out and rewritten whenever the server restarts or
+                    not (defaults to <code>false</code>).
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> DB = createDatabase(<span class="hljs-string">"MyDatabase"</span>, <span class="hljs-literal">false</span>);
+</code></pre>
+                <h4 id="db-dropdatabase">DB.dropDatabase</h4>
+                <p>
+                    The <code>dropDatabase()</code> method is a database method
+                    returned from the <code>createDatabase()</code> method, it
+                    allows you to entirely drop/delete the database.
+                </p>
+                <pre><code class="lang-js">DB.dropDatabase()<span class="hljs-comment">;</span>
+</code></pre>
+                <h4 id="db-createfarm">DB.createFarm</h4>
+                <p>
+                    The <code>createFarm()</code> method is a database method
+                    returned from the <code>createDatabase()</code> method, it
+                    allows you to create farms inside the database directory.
+                    Farms in PotatoDB are like collections in NoSQL databases or
+                    tables in SQL databases. This method takes two arguments:
+                    first is the name of the farm, and second is an options
+                    object.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> Farm = DB.createFarm(<span class="hljs-string">"Farm"</span>, {
+    identifications: <span class="hljs-literal">true</span>,
+    timestamps: <span class="hljs-literal">true</span>,
+});
+</code></pre>
+                <p>Available options:</p>
+                <ul>
+                    <li>
+                        <code>identifications</code> Speicifes whether the
+                        potatoes (documents in NoSQL or records in SQL) inside
+                        the farm should be stamped with identification strings
+                        or not.
+                    </li>
+                    <li>
+                        <code>timestamps</code> Specifies whether the potatoes
+                        (document in NoSQL or records in SQL) inside the farm
+                        should be stamped with timestamps (createdAt and
+                        updatedAt). Timestamps contain numerical timestamps that
+                        point to the time when the potato object was first
+                        created and lastly updated.
+                    </li>
+                </ul>
+                <h4 id="farm-countpotatoes">Farm.countPotatoes</h4>
+                <p>
+                    The <code>countPotatoes()</code> method is an asynchronous
+                    farm method returned from the
+                    <code>DB.createFarm()</code> method, it returns the precise
+                    number of potato objects in the farm.
+                </p>
+                <pre><code class="lang-js">await Farm.countPotatoes()<span class="hljs-comment">;</span>
+</code></pre>
+                <h4 id="farm-dropfarm">Farm.dropFarm</h4>
+                <p>
+                    The <code>dropFarm()</code> method is a farm method returned
+                    from the <code>DB.createFarm()</code> method, it allows you
+                    to entirely drop/delete the farm from the database.
+                </p>
+                <pre><code class="lang-js">Farm.dropFarm()<span class="hljs-comment">;</span>
+</code></pre>
+                <h4 id="farm-insertone">Farm.insertOne</h4>
+                <p>
+                    The <code>insertOne()</code> method is a farm method used to
+                    insert a single potato into the farm. The method takes a
+                    single potato object as an argument, and returns the
+                    inserted object. If identifications and timestamps were set
+                    on, then the returned potato object will include them.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Farm</span><span class="hljs-selector-class">.insertOne</span>({ <span class="hljs-attribute">name</span>: <span class="hljs-string">"Swordax"</span>, age: <span class="hljs-number">1</span>, isHuman: true });
+</code></pre>
+                <h4 id="farm-insertmany">Farm.insertMany</h4>
+                <p>
+                    The <code>insertMany()</code> method is a farm method used
+                    to insert multiple potatoes into the farm. The method takes
+                    a single array of potato objects as an argument, and returns
+                    an array of the inserted objects. If identifications and
+                    timestamps were set on, then the returned potato objects
+                    will include them.
+                </p>
+                <pre><code class="lang-js">await Farm.insertMany([
+    {
+<span class="hljs-symbol">        name:</span> <span class="hljs-string">"Vazox"</span>,
+<span class="hljs-symbol">        age:</span> <span class="hljs-number">2</span>,
+<span class="hljs-symbol">        isHuman:</span> false,
+    },
+    {
+<span class="hljs-symbol">        name:</span> <span class="hljs-string">"Alxa"</span>,
+<span class="hljs-symbol">        age:</span> <span class="hljs-number">3</span>,
+<span class="hljs-symbol">        isHuman:</span> true,
+    },
+]);
+</code></pre>
+                <h4 id="farm-findone">Farm.findOne</h4>
+                <p>
+                    The <code>findOne()</code> method is a farm method used to
+                    find a single potato and return it. The method takes two
+                    arguments: first is a query object or a test function, and
+                    second is an options object. Both arguments are optional. If
+                    no arguments were provided, or if an empty query object was
+                    provided, then the method would return the first potato
+                    object it would encounter.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> byName = <span class="hljs-function">await Farm.<span class="hljs-title">findOne</span><span class="hljs-params">({ name: <span class="hljs-string">"Swordax"</span> })</span></span>;
+<span class="hljs-keyword">const</span> byNameAndAge = <span class="hljs-function">await Farm.<span class="hljs-title">findOne</span><span class="hljs-params">({ name: <span class="hljs-string">"Alxa"</span>, age: <span class="hljs-number">3</span> })</span></span>;
+</code></pre>
+                <h4 id="farm-findmany">Farm.findMany</h4>
+                <p>
+                    The <code>findMany()</code> method is a farm method used to
+                    find multiple potatoes and return them as an array. The
+                    method takes two arguments: first is a query object or a
+                    test function, and second is an options object. Both
+                    arguments are optional. If no arguments were provided, or if
+                    an empty query object was provided, then the method would
+                    return all potatoes from the farm.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> eighteen = <span class="hljs-keyword">await</span> Farm.findMany({ <span class="hljs-attr">age</span>: <span class="hljs-number">18</span> });
+<span class="hljs-keyword">const</span> eighteenOrOlder = <span class="hljs-keyword">await</span> Farm.findMany(<span class="hljs-function">(<span class="hljs-params">potato</span>) =&gt;</span> potato.age &gt;= <span class="hljs-number">18</span>);
+</code></pre>
+                <h4 id="find-methods-options">Find Methods Options</h4>
+                <p>
+                    Both <code>findOne()</code> and
+                    <code>findMany()</code> methods could take a second options
+                    object.
+                </p>
+                <p>Available options:</p>
+                <ul>
+                    <li>
+                        <code>limit</code> : (number) Specifies the maximum
+                        number of potatoes to return.
+                    </li>
+                    <li>
+                        <code>skip</code> : (number) Specifies the number of
+                        potatoes to skip before starting the search.
+                    </li>
+                    <li>
+                        <code>recent</code>: (boolean) Specifies whether
+                        priority of search should be to recent potatoes. By
+                        default, data is traversed oldest to recent.
+                    </li>
+                    <li>
+                        <code>sort</code>: (object) An object that specifies the
+                        field to sort based on, and the value of that field
+                        would specify the order of sorting (positive number for
+                        ascending, negative number for descending).
+                    </li>
+                </ul>
+                <p>
+                    limit and sort options would make sense to be used with the
+                    <code>findMany()</code> method.
+                </p>
+                <p>Example with options:</p>
+                <pre><code class="lang-js">const data = await UsersFarm.findMany(
+    {},
+    {
+<span class="hljs-symbol">        recent:</span> true, <span class="hljs-comment">// begin searching with most recent data</span>
+<span class="hljs-symbol">        limit:</span> <span class="hljs-number">10</span>, <span class="hljs-comment">// return maximum of 10 results</span>
+<span class="hljs-symbol">        skip:</span> <span class="hljs-number">5</span>, <span class="hljs-comment">// skip 5 potatoes before beginning the search</span>
+<span class="hljs-symbol">        sort:</span> {
+<span class="hljs-symbol">            age:</span> <span class="hljs-number">1</span>, <span class="hljs-comment">// sort according to the age field in an ascending order</span>
+        },
+    }
+);
+</code></pre>
+                <h4 id="farm-updateone">Farm.updateOne</h4>
+                <p>
+                    The <code>updateOne()</code> method is a farm method used to
+                    update a single potato. The method takes three arguments:
+                    first is a query object or a test function, second is an
+                    updates object or an update function, and third is a boolean
+                    that specifies whether the method should return the updated
+                    version of the potato object or the pre-updated one
+                    (defaults to true which returns the updated version).
+                </p>
+                <pre><code class="lang-js"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Farm</span><span class="hljs-selector-class">.updateOne</span>({ <span class="hljs-attribute">name</span>: <span class="hljs-string">"Swordax"</span> }, { <span class="hljs-attribute">age</span>: <span class="hljs-number">2</span> }, <span class="hljs-selector-tag">true</span>);
+</code></pre>
+                <h4 id="farm-updatemany">Farm.updateMany</h4>
+                <p>
+                    The <code>updateMany()</code> method is a farm method used
+                    to update mulitple potatoes. The method takes three
+                    arguments: first is a query object or a test function,
+                    second is an updates object or an update function, and third
+                    is a boolean that specifies whether the method should return
+                    the updated version of the potato objects or the pre-updated
+                    one (defaults to true which returns the updated version).
+                </p>
+                <pre><code class="lang-js">await Farm.updateMany(<span class="hljs-function"><span class="hljs-params">(potato)</span> =&gt;</span> potato.age &gt;= <span class="hljs-number">18</span>, { authorized: <span class="hljs-literal">false</span> });
+</code></pre>
+                <p>
+                    In the above example, the <code>updateMany()</code> method
+                    took a query test function instead of a query object. The
+                    query function filters for potatoes which have the age
+                    property greater than or equal to 18.
+                </p>
+                <h4 id="farm-deleteone">Farm.deleteOne</h4>
+                <p>
+                    The <code>deleteOne()</code> method is a farm method used to
+                    delete a single potato. The method takes a single argument,
+                    which could be a query object or a test function. The method
+                    returns the deleted potato object.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">await</span> Farm.deleteOne({ <span class="hljs-attr">name</span>: <span class="hljs-string">"Alxa"</span> });
+<span class="hljs-keyword">await</span> Farm.deleteOne(<span class="hljs-function">(<span class="hljs-params">potato</span>) =&gt;</span> potato.name === <span class="hljs-string">"Vazox"</span>);
+</code></pre>
+                <h4 id="farm-deletemany">Farm.deleteMany</h4>
+                <p>
+                    The <code>deleteMany()</code> method is a farm method used
+                    to delete multiple potatoes. The method takes a single
+                    argument, which could be a query object or a test function.
+                    The method returns an array of the deleted potato objects.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">await</span> Farm.deleteMany({ <span class="hljs-attr">age</span>: <span class="hljs-number">0</span> });
+<span class="hljs-keyword">await</span> Farm.deleteMany(<span class="hljs-function">(<span class="hljs-params">potato</span>) =&gt;</span> potato.age &lt; <span class="hljs-number">18</span>);
+</code></pre>
+                <h4 id="principles-of-querying-with-potatodb">
+                    Principles of Querying with PotatoDB
+                </h4>
+                <p>
+                    Finding, updating, and deleteing methods of PotatoDB farms
+                    all require querying to select potatoes to return or apply
+                    changes on. Querying with PotatoDB can be done in two ways:
+                    First is object querying by providing a query object. Second
+                    is functional querying by providing a test function to be
+                    used in querying.
+                </p>
+                <ul>
+                    <li>
+                        A query object that selects potatoes with a username of
+                        &quot;Swordax&quot;:
+                        <code>{ username: &quot;Swordax&quot; }</code>
+                    </li>
+                    <li>
+                        A query object that selects potatoes with an age of 18:
+                        <code>{ age: 18 }</code>
+                    </li>
+                    <li>
+                        A query object that selects potatoes with an isMarried
+                        property set to true: <code>{ isMarried: true }</code>
+                    </li>
+                </ul>
+                <p>
+                    You can query nested properties by using string paths in the
+                    query object, nested property keys should be separated with
+                    dots.
+                </p>
+                <p>
+                    The following example queries users that have the nested
+                    <code>building</code> field set to &quot;Uptown
+                    Building&quot; in a dataset that has the following
+                    signature:
+                </p>
+                <pre><code class="lang-js">{
+<span class="hljs-symbol">    name:</span> string,
+<span class="hljs-symbol">    age:</span> number,
+<span class="hljs-symbol">    country:</span> {
+<span class="hljs-symbol">        city:</span> {
+<span class="hljs-symbol">            street:</span> {
+<span class="hljs-symbol">                building:</span> string
+            }
+        }
+    }
+}
+</code></pre>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> data = <span class="hljs-function">await Users.<span class="hljs-title">findMany</span><span class="hljs-params">({
+    <span class="hljs-string">"country.city.street.building"</span>: <span class="hljs-string">"Uptown Building"</span>,
+})</span></span>;
+</code></pre>
+                <p>
+                    The second way of querying data with PotatoDB is functional
+                    querying by using custom filtering test functions. You can
+                    design your own test function to be used in querying data
+                    instead of a limited query object. The test function takes a
+                    potato as an argument and it should return true or false
+                    depending on whether the argument passes the test or not.
+                </p>
+                <p>
+                    The following example queries users that have
+                    &quot;Arabic&quot; and &quot;English&quot; languages listed
+                    in their <code>languages</code> field:
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> data = <span class="hljs-keyword">await</span> Users.findOne(<span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> (
+        user.languages.includes(<span class="hljs-string">"English"</span>) &amp;&amp; user.languages.includes(<span class="hljs-string">"Arabic"</span>)
+    );
+});
+</code></pre>
+                <h4 id="query-operators">Query Operators</h4>
+                <p>
+                    PotatoDB provides query operators that can be used in query
+                    objects when querying data. Query operators can help you
+                    build flexible reachy query objects instead of having to
+                    build a custom test function.
+                </p>
+                <p>
+                    The following example uses two of the query operators (<code
+                        >$gte</code
+                    >
+                    and <code>$lt</code>) to select users that are more than or
+                    equal to eighteen years old, and those who are less than
+                    eighteen years old:
+                </p>
+                <pre><code class="lang-js">const eighteenOrOlder = await Users.findMany({ age: { $gte: <span class="hljs-number">18</span> } });
+const underEighteen = await Users.findMany({ age: { $lt: <span class="hljs-number">18</span> } });
+</code></pre>
+                <h5 id="query-operators">Query Operators</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operator</th>
+                            <th>JS Equivalent</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$gt</td>
+                            <td>&gt;</td>
+                            <td>Greater than</td>
+                        </tr>
+                        <tr>
+                            <td>$gte</td>
+                            <td>&gt;=</td>
+                            <td>Greater than or equal to</td>
+                        </tr>
+                        <tr>
+                            <td>$lt</td>
+                            <td>&lt;</td>
+                            <td>Less than</td>
+                        </tr>
+                        <tr>
+                            <td>$lte</td>
+                            <td>&lt;=</td>
+                            <td>Less than or equal to</td>
+                        </tr>
+                        <tr>
+                            <td>$eq</td>
+                            <td>===</td>
+                            <td>Equal to</td>
+                        </tr>
+                        <tr>
+                            <td>$eqv</td>
+                            <td>==</td>
+                            <td>Equal to value (regardless of data type)</td>
+                        </tr>
+                        <tr>
+                            <td>$neq</td>
+                            <td>!==</td>
+                            <td>Not equal to</td>
+                        </tr>
+                        <tr>
+                            <td>$neqv</td>
+                            <td>!=</td>
+                            <td>Not equal to (regardless of data type)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h5 id="array-query-operators">Array Query Operators</h5>
+                <p>
+                    Array query operators (\$in, \$nin, and \$all) can be used
+                    in different scenarios.
+                </p>
+                <p>Given dataset with the following signature:</p>
+                <pre><code class="lang-js">{
+    <span class="hljs-built_in">name</span>: <span class="hljs-built_in">string</span>,
+    age: <span class="hljs-built_in">number</span>,
+    hobbies: <span class="hljs-built_in">string</span>[]
+}
+</code></pre>
+                <p>\$in:</p>
+                <pre><code class="lang-js">// gets users that have <span class="hljs-string">"Coding"</span> inside their hobbies<span class="hljs-built_in"> array
+</span>await Users.findMany({ hobbies: { $in: <span class="hljs-string">"Coding"</span> } });
+
+// gets users that are from the ages, 19, 20,<span class="hljs-built_in"> and </span>21
+await Users.findMany({ age: { $in: [19, 20, 21] } });
+
+// gets users that have either <span class="hljs-string">"Coding"</span><span class="hljs-built_in"> or </span><span class="hljs-string">"Swimming"</span> inside their hobbies<span class="hljs-built_in"> array
+</span>await Users.findMany({ hobbies: { $in: [<span class="hljs-string">"Coding"</span>, <span class="hljs-string">"Swimming"</span>] } });
+</code></pre>
+                <p>\$nin:</p>
+                <pre><code class="lang-js">// gets users that DO NOT have <span class="hljs-string">"Coding"</span> inside their hobbies<span class="hljs-built_in"> array
+</span>await Users.findMany({ hobbies: { $nin: <span class="hljs-string">"Coding"</span> } });
+
+// gets users that are NOT from the ages, 19, 20,<span class="hljs-built_in"> and </span>21
+await Users.findMany({ age: { $nin: [19, 20, 21] } });
+
+// gets users that DO NOT have <span class="hljs-string">"Coding"</span><span class="hljs-built_in"> and </span><span class="hljs-string">"Swimming"</span> inside their hobbies<span class="hljs-built_in"> array
+</span>await Users.findMany({ hobbies: { $nin: [<span class="hljs-string">"Coding"</span>, <span class="hljs-string">"Swimming"</span>] } });
+</code></pre>
+                <p>\$all:</p>
+                <pre><code class="lang-js">// gets users that have both <span class="hljs-string">"Coding"</span><span class="hljs-built_in"> and </span><span class="hljs-string">"Swimming"</span> inside their hobbies<span class="hljs-built_in"> array
+</span>await Users.findMany({ hobbies: { $all: [<span class="hljs-string">"Coding"</span>, <span class="hljs-string">"Swimming"</span>] } });
+</code></pre>
+                <h4 id="principles-of-updating-with-potatodb">
+                    Principles of Updating with PotatoDB
+                </h4>
+                <p>
+                    Updating PotatoDB data can be done in two ways, either by
+                    providing an updates object, or by providing an updating
+                    function.
+                </p>
+                <p>
+                    An updates object can be given new values to fields, fields
+                    previous values will be overwritten with the new given
+                    values. If fields don&#39;t exist, they will be created.
+                    Multiple fields can be updated at the same time by providing
+                    multiple key:value pairs in the updates object.
+                </p>
+                <pre><code class="lang-js"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Users</span><span class="hljs-selector-class">.updateOne</span>({ <span class="hljs-attribute">name</span>: <span class="hljs-string">"Swordax"</span> }, { <span class="hljs-attribute">age</span>: <span class="hljs-number">2</span> });
+<span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Users</span><span class="hljs-selector-class">.updateOne</span>({ <span class="hljs-attribute">name</span>: <span class="hljs-string">"Alxa"</span> }, { <span class="hljs-attribute">age</span>: <span class="hljs-number">0</span>, isHuman: true });
+</code></pre>
+                <p>
+                    Updating nested properties can be done by accessing these
+                    nested fields thorugh a string path in the update object.
+                    Key names should be separated with dots.
+                </p>
+                <p>
+                    The following example access the <code>height</code> nested
+                    property and updates it&#39;s value:
+                </p>
+                <pre><code class="lang-js">await Users.updateOne(
+    { name: <span class="hljs-string">"Swordax"</span> },
+    { <span class="hljs-string">"physicalTraits.body.height"</span>: <span class="hljs-number">184</span> }
+);
+</code></pre>
+                <p>
+                    Another way that can be used to update potatoes is update
+                    functions. Update functions are custom functions that can be
+                    designed to update the potatoes in any way you desire.
+                    Update functions give you more flexibility in updating
+                    potatoes rather than limiting the possiblities with update
+                    objects.
+                </p>
+                <pre><code class="lang-js">await Users.updateOne({ <span class="hljs-attribute">username</span>: "Swordax" }, (user) =&gt; {
+    user<span class="hljs-variable">.token</span> = Math<span class="hljs-variable">.floor</span>(Math<span class="hljs-variable">.random</span>() * 11);
+});
+</code></pre>
+                <h4 id="update-operators">Update Operators</h4>
+                <p>
+                    PotatoDB provides update operators that can be used inside
+                    update objects to give you more flexibility when updating
+                    fields. Update operators can give you shorthands to doing
+                    things you couldn&#39;t do unless you designed your own
+                    custom update function.
+                </p>
+                <p>
+                    The following example uses the <code>$push</code> operator
+                    to push &quot;Arabic&quot; language into the languages array
+                    field:
+                </p>
+                <pre><code class="lang-js"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Users</span><span class="hljs-selector-class">.updateMany</span>(
+    { <span class="hljs-attribute">nationality</span>: <span class="hljs-string">"Syria"</span> },
+    { $<span class="hljs-attribute">push</span>: { <span class="hljs-attribute">languages</span>: <span class="hljs-string">"Arabic"</span> } }
+);
+</code></pre>
+                <p>You could also push to multiple array fields:</p>
+                <pre><code class="lang-js"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Users</span><span class="hljs-selector-class">.updateMany</span>(
+    { <span class="hljs-attribute">nationality</span>: <span class="hljs-string">"Syria"</span> },
+    {
+        $<span class="hljs-attribute">push</span>: {
+            <span class="hljs-attribute">languages</span>: <span class="hljs-string">"Arabic"</span>,
+            <span class="hljs-attribute">hobbies</span>: <span class="hljs-string">"Dabka Dance"</span>,
+        },
+    }
+);
+</code></pre>
+                <p>You could use multiple update operators at the same time:</p>
+                <pre><code class="lang-js"><span class="hljs-selector-tag">await</span> <span class="hljs-selector-tag">Users</span><span class="hljs-selector-class">.updateMany</span>(
+    { <span class="hljs-attribute">nationality</span>: <span class="hljs-string">"Syria"</span> },
+    {
+        $<span class="hljs-attribute">push</span>: {
+            <span class="hljs-attribute">languages</span>: <span class="hljs-string">"Arabic"</span>,
+        },
+        $<span class="hljs-attribute">inc</span>: {
+            <span class="hljs-attribute">age</span>: <span class="hljs-number">1</span>,
+        },
+    }
+);
+</code></pre>
+                <h5 id="update-operators-">Update Operators:</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operator</th>
+                            <th>JS Equivalent</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$inc</td>
+                            <td>+= -=</td>
+                            <td>
+                                Increments/Decrements field by the given value
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>$push</td>
+                            <td>Array.prototype.push()</td>
+                            <td>Pushes a value into an array field</td>
+                        </tr>
+                        <tr>
+                            <td>$addToSet</td>
+                            <td>Set.prototype.add()</td>
+                            <td>
+                                Pushes a value into an array field only if it
+                                doesn&#39;t already exist in it
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>$pull</td>
+                            <td></td>
+                            <td>
+                                Removes all occurrences of a value from an array
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>$concat</td>
+                            <td>
+                                Array.prototype.concat() <br />
+                                String.prototype.concat()
+                            </td>
+                            <td>Concatenates two arrays/strings together</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4 id="full-example">Full Example</h4>
+                <p>
+                    The following code demonstrates the creation of an API that
+                    communicates with a PotatoDB database system, integrated
+                    with express.js
+                </p>
+                <pre><code class="lang-js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>);
+<span class="hljs-keyword">const</span> { setRoot, createDatabase } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"potatodb"</span>);
+
+<span class="hljs-keyword">const</span> app = express();
+
+<span class="hljs-comment">// configure express app</span>
+app.use(express.static(<span class="hljs-string">"public"</span>));
+app.use(express.urlencoded({ <span class="hljs-attr">extended</span>: <span class="hljs-literal">true</span> }));
+app.use(express.json());
+
+<span class="hljs-comment">// set potatodb root</span>
+setRoot(__dirname, <span class="hljs-string">"databases"</span>);
+
+<span class="hljs-comment">// create project database and users farm</span>
+<span class="hljs-keyword">let</span> DB, Users;
+<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+    DB = <span class="hljs-keyword">await</span> createDatabase(<span class="hljs-string">"DB"</span>, <span class="hljs-literal">false</span>);
+    Users = <span class="hljs-keyword">await</span> DB.createFarm(<span class="hljs-string">"Users"</span>, {
+        <span class="hljs-attr">identifications</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">timestamps</span>: <span class="hljs-literal">true</span>,
+    });
+
+    <span class="hljs-comment">// listen to server requests</span>
+    app.listen(<span class="hljs-number">3000</span>, () =&gt; {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Server running on port 3000"</span>);
+    });
+})();
+
+<span class="hljs-comment">// create user</span>
+app.post(<span class="hljs-string">"/create-user"</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> Users.insertOne(req.body);
+        res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">userId</span>: user._id });
+    } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err);
+        res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: err.message });
+    }
+});
+
+<span class="hljs-comment">// get user</span>
+app.get(<span class="hljs-string">"/get-user"</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">await</span> Users.findOne({ <span class="hljs-attr">username</span>: req.body.username });
+        res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, user });
+    } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err);
+        res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: err.message });
+    }
+});
+
+<span class="hljs-comment">// get users (implementing pagination)</span>
+app.get(<span class="hljs-string">"/get-users/:pageNumber"</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">const</span> resultsPerPage = <span class="hljs-number">10</span>;
+
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-comment">/*
+            1- implement pagination using skip and limit options
+            2- show most recent data first
+            3- sort data according to "user.personalInformation.age" field in ascending order
+        */</span>
+
+        <span class="hljs-keyword">const</span> users = <span class="hljs-keyword">await</span> Users.findMany(
+            {},
+            {
+                <span class="hljs-attr">skip</span>: resultsPerPage * (req.params.pageNumber - <span class="hljs-number">1</span>),
+                <span class="hljs-attr">limit</span>: resultsPerPage,
+                <span class="hljs-attr">recent</span>: <span class="hljs-literal">true</span>,
+                <span class="hljs-attr">sort</span>: {
+                    <span class="hljs-string">"personalInformation.age"</span>: <span class="hljs-number">1</span>,
+                },
+            }
+        );
+
+        res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, users });
+    } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err);
+        res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: err.message });
+    }
+});
+
+<span class="hljs-comment">// update username</span>
+app.patch(<span class="hljs-string">"/update-username"</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">const</span> updatedUser = <span class="hljs-keyword">await</span> User.updateOne(
+            {
+                <span class="hljs-attr">username</span>: req.body.username,
+            },
+            {
+                <span class="hljs-attr">username</span>: req.body.newUsername,
+            },
+            <span class="hljs-literal">true</span> <span class="hljs-comment">// get post-updated user object</span>
+        );
+
+        res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, updatedUser });
+    } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err);
+        res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: err.message });
+    }
+});
+
+<span class="hljs-comment">// delete user</span>
+app.delete(<span class="hljs-string">"/delete-user/:userId"</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {
+    <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">const</span> deletedUser = <span class="hljs-keyword">await</span> User.deleteOne({ <span class="hljs-attr">_id</span>: req.params.userId });
+        res.status(<span class="hljs-number">200</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">true</span>, deletedUser });
+    } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err);
+        res.status(<span class="hljs-number">400</span>).json({ <span class="hljs-attr">success</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">error</span>: err.message });
+    }
+});
+</code></pre>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <%- include("partials/footer") %>
+
+        <!-- Scripts -->
+        <script src="./scripts/docs.js" type="module"></script>
+    </body>
+</html>

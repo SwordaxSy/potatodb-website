@@ -1,0 +1,93 @@
+@use "../assets/" as *;
+
+.docs {
+    body {
+        overflow-x: visible;
+    }
+
+    main {
+        @include flex($just: flex-end);
+
+        --header-height: 65px;
+        --content-width: 74%;
+
+        .docs {
+            &-menu {
+                height: calc(100vh - var(--header-height) - 28px);
+                width: calc(26% - 28px);
+                background-color: darken($bgColor, 4%);
+                padding: 14px;
+
+                position: fixed;
+                bottom: 0;
+                left: 0;
+
+                overflow-y: auto;
+
+                a {
+                    display: block;
+                    text-decoration: none;
+                    padding: 6px;
+                    margin: 3px;
+                    transition: $transition;
+
+                    &.category {
+                        font-size: 30px;
+                    }
+
+                    &.topic {
+                        font-size: 20px;
+                        padding-left: 20px;
+                    }
+
+                    &:hover {
+                        background-color: darken($bgColor, 5%);
+                    }
+                }
+            }
+
+            &-content {
+                width: calc(var(--content-width) - 100px);
+                padding: 50px;
+
+                h2 {
+                    margin-bottom: 10px;
+                    margin-top: 60px;
+
+                    &:first-of-type {
+                        margin-top: 0;
+                    }
+
+                    &:nth-of-type(2) {
+                        margin-bottom: -20px;
+                    }
+                }
+
+                h4 {
+                    margin-top: 40px;
+                }
+
+                p {
+                    margin: 10px 0;
+                }
+
+                table,
+                th,
+                td {
+                    border: 1.5px solid white;
+                    border-collapse: collapse;
+                }
+
+                th,
+                td {
+                    padding: 10px;
+                }
+
+                .table-title {
+                    padding-bottom: 10px;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

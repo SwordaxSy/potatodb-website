@@ -1,0 +1,28 @@
+<header>
+    <!-- Brand for non-home pages -->
+    <% if (page !== "Home") { %>
+    <a href="/">
+        <div class="brand">
+            <img src="./images/logo.png" alt="PotatoDB Logo" />
+            <h1>
+                PotatoDB <% if (page === "Docs") { %><span>Docs</span><% } %>
+            </h1>
+        </div>
+    </a>
+    <% } %>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="/" class="nav-home">Home</a></li>
+            <li><a href="/docs" class="nav-docs">Docs</a></li>
+            <li><a href="/contact" class="nav-contact">Contact</a></li>
+            <li>
+                <a target="_blank" href="https://github.com/SwordaxSy/potatodb"
+                    >Github
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i
+                ></a>
+            </li>
+        </ul>
+    </nav>
+</header>

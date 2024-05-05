@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="home">
+    <%- include("./partials/head") %>
+    <body>
+        <!-- Header -->
+        <%- include("partials/header") %>
+
+        <!-- Main Page Content -->
+        <main>
+            <!-- Landing Face -->
+            <div class="landing-face">
+                <!-- Brand -->
+                <div class="brand">
+                    <div class="logo">
+                        <img src="./images/logo.png" alt="Logo" />
+                        <h1>PotatoDB</h1>
+                    </div>
+                    <p class="description">
+                        A nodejs library for making file system json databases
+                    </p>
+                </div>
+
+                <!-- NPM Command -->
+                <div class="npm-command">
+                    <p class="command" title="Click to copy">
+                        npm install potatodb |
+                        <i class="fa-solid fa-clipboard"></i>
+                    </p>
+                    <div class="tooltip">
+                        <div class="angle"></div>
+                        <p>Copied <i class="fa-solid fa-check"></i></p>
+                    </div>
+                </div>
+
+                <!-- Blob Images -->
+                <div class="blobs">
+                    <img
+                        src="./images/blobs/blob-one.svg"
+                        alt="Blob Image"
+                        class="blob blob-one"
+                        draggable="false"
+                    />
+                    <img
+                        src="./images/blobs/blob-two.svg"
+                        alt="Blob Image"
+                        class="blob blob-two"
+                        draggable="false"
+                    />
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <section class="about section">
+                <h2 class="section-title">About</h2>
+                <article class="section-content" s>
+                    <p>
+                        PotatoDB is a
+                        <a href="https://nodejs.org/">Node.js</a> library for
+                        building and managing JSON databases in the local file
+                        system of node.js servers. PotatoDB provides functions
+                        and methods for creating and managing databses,
+                        inserting, querying, updating, and deleting data from
+                        the databases. PotatoDB also allows you to manage
+                        multiple databases in the same server.
+                    </p>
+                    <br />
+                    <p>
+                        PotatoDB has a very basic and simple usage, and is very
+                        easy to deal with. It also introduces simplicity and
+                        flexibility in querying and updating data, which could
+                        be challenging to implement with other database
+                        management systems.
+                    </p>
+                </article>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <%- include("partials/footer") %>
+
+        <!-- Scripts -->
+        <script src="./scripts/home.js" type="module"></script>
+    </body>
+</html>

@@ -1,0 +1,184 @@
+@use "../assets/" as *;
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Quicksand", "Almarai";
+    color: white;
+}
+
+pre {
+    margin: 1em 0;
+}
+
+pre,
+code {
+    font-family: monospace;
+
+    span {
+        font-family: monospace;
+    }
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: $bgColor;
+    min-height: 100vh;
+}
+
+html.home,
+html.home body {
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    --scrollbar-size: 10px;
+
+    width: var(--scrollbar-size);
+    height: var(--scrollbar-size);
+
+    &-thumb {
+        background-color: $mainColor;
+        border-radius: 5px;
+    }
+}
+
+// Header
+header {
+    @include flex($dir: column);
+
+    position: relative;
+
+    nav ul {
+        @include flex;
+
+        li {
+            list-style: none;
+            font-size: 20px;
+            margin: 20px;
+
+            a {
+                text-decoration: none;
+                padding: 8px 12px;
+                transition: $transition;
+
+                &:hover {
+                    opacity: 0.6;
+                }
+
+                &.current {
+                    color: $mainColor;
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+
+    .brand {
+        @include flex;
+
+        position: fixed;
+        top: 12.5px;
+        left: 10px;
+
+        img {
+            height: 40px;
+            margin-right: 6px;
+        }
+
+        h1 {
+            font-size: 24px;
+            white-space: nowrap;
+
+            span {
+                color: $mainColor;
+            }
+        }
+    }
+}
+
+// Footer
+footer {
+    @include flex($just: space-between);
+
+    margin-top: 60px;
+    padding: 20px 100px;
+
+    .brand {
+        @include flex;
+
+        img {
+            width: 60px;
+            margin-right: 7px;
+        }
+
+        h1 {
+            font-size: 45px;
+        }
+    }
+
+    .credits {
+        h3 a {
+            text-decoration: none;
+            color: $mainColor;
+            transition: $transition;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+
+        .contact-icons {
+            margin-top: 10px;
+
+            a {
+                display: block;
+                text-decoration: none;
+                margin: 5px 0;
+                transition: $transition;
+
+                i {
+                    min-width: 20px;
+                    min-height: 20px;
+                    text-align: center;
+                }
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    &.docs-footer {
+        justify-content: space-evenly;
+        width: calc(74% - 200px);
+        float: right;
+    }
+}
+
+// Scroll Up
+.scroll-up-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 56px;
+    color: $mainColor;
+    cursor: pointer;
+    pointer-events: none;
+    opacity: 0;
+    transition: $transition;
+
+    &.active {
+        opacity: 0.6;
+        pointer-events: auto;
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}

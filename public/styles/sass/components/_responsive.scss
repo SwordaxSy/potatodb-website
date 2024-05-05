@@ -1,0 +1,266 @@
+@use "../assets/" as *;
+
+@media (max-width: 970px) {
+    html:not(.home) {
+        header {
+            padding-top: 60px;
+
+            .brand {
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+
+    .docs main {
+        --header-height: 125px;
+        --content-width: 100%;
+
+        justify-content: center;
+
+        .docs-menu {
+            display: none;
+        }
+    }
+
+    footer.docs-footer {
+        justify-content: space-between;
+        width: unset;
+        float: unset;
+    }
+}
+
+@media (max-width: 880px) {
+    .contact {
+        main {
+            section {
+                width: 90%;
+
+                h2 {
+                    font-size: 24px;
+
+                    span.pad-left {
+                        padding-left: 200px;
+                    }
+                }
+
+                .comments .comment {
+                    &-header {
+                        &-text {
+                            .username {
+                                font-size: 16px;
+                            }
+
+                            .publish-date {
+                                font-size: 10px;
+                            }
+                        }
+                    }
+
+                    &-content {
+                        p {
+                            font-size: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 670px) {
+    ::-webkit-scrollbar {
+        --scrollbar-size: 5px;
+    }
+
+    .home {
+        .landing-face {
+            .brand {
+                padding: 80px 30px 40px 30px;
+
+                .logo {
+                    img {
+                        width: 80px;
+                        margin-right: 16px;
+                    }
+
+                    h1 {
+                        font-size: 64px;
+                    }
+                }
+
+                .description {
+                    padding: 16px 0;
+                    font-size: 16px;
+                }
+            }
+
+            .npm-command {
+                .command {
+                    padding: 13px;
+                    font-size: 16px;
+                    border-radius: 10px;
+                }
+
+                .tooltip {
+                    margin-top: 8px;
+                    padding: 5px 8px;
+
+                    font-size: 15px;
+                    border-radius: 7px;
+
+                    .angle {
+                        border-left-width: 8px;
+                        border-right-width: 8px;
+                        border-bottom-width: 8px;
+                    }
+                }
+            }
+        }
+
+        .section {
+            width: 80%;
+            padding: 16px;
+
+            &-title {
+                font-size: 32px;
+            }
+
+            &-content {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+    }
+
+    header {
+        nav ul {
+            li {
+                font-size: 16px;
+                margin: 16px;
+
+                a {
+                    padding: 8px 10px;
+                }
+            }
+        }
+    }
+
+    footer {
+        flex-direction: column;
+        padding: 16px 80px;
+    }
+}
+
+@media (max-width: 570px) {
+    .contact main section {
+        h2 {
+            span.pad-left {
+                padding-left: 100px;
+            }
+        }
+
+        .comments {
+            border-width: 3px;
+            padding: 20px;
+            row-gap: 20px;
+
+            .no-comments {
+                padding: 20px 0;
+            }
+        }
+
+        .comment-input {
+            textarea,
+            button {
+                width: 90%;
+            }
+        }
+    }
+}
+
+@media (max-width: 470px) {
+    .home {
+        .landing-face {
+            .brand {
+                .logo {
+                    img {
+                        width: 50px;
+                        margin-right: 8px;
+                    }
+
+                    h1 {
+                        font-size: 40px;
+                    }
+                }
+            }
+        }
+
+        .section {
+            width: 90%;
+        }
+    }
+
+    .docs main {
+        .docs-content {
+            width: calc(100% - 40px);
+            font-size: 90%;
+            padding: 20px;
+        }
+    }
+
+    .contact main section {
+        h2 {
+            span.pad-left {
+                padding-left: 0;
+            }
+        }
+
+        .comments .comment {
+            &-header {
+                .user-avatar {
+                    width: 30px;
+                    margin-right: 6px;
+                }
+
+                &-text {
+                    .username {
+                        font-size: 14px;
+                    }
+
+                    .publish-date {
+                        font-size: 8px;
+                    }
+                }
+            }
+
+            &-content {
+                padding: 5px;
+
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    header {
+        nav ul {
+            li {
+                font-size: 14px;
+                margin: 14px;
+
+                a {
+                    padding: 6px 8px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 370px) {
+    header nav ul li {
+        margin: 14px 8px;
+    }
+}

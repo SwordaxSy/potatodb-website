@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" class="contact">
+    <%- include("partials/head") %>
+    <body>
+        <!-- Header -->
+        <%- include("partials/header") %>
+
+        <!-- Main Page Content -->
+        <main>
+            <section>
+                <h2><span>Find</span> me on</h2>
+                <div class="cards">
+                    <a
+                        href="https://discord.com/users/465453058667839499/"
+                        target="_blank"
+                    >
+                        <div class="card card-discord">
+                            <i class="fa-brands fa-discord contact-icon"></i>
+                            <div>
+                                <p>Swordax#5756</p>
+                                <span>Discord</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="mailto:swordax.sy@gmail.com" target="_blank">
+                        <div class="card card-email">
+                            <i class="fa-solid fa-envelope contact-icon"></i>
+                            <div>
+                                <p>swordax.sy</p>
+                                <span>Gmail</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="social-media-at">
+                        <div class="card card-at">
+                            <i class="fa-solid fa-at contact-icon"></i>
+                            <div>
+                                <p>swordax.sy</p>
+                                <span>Social Media</span>
+                            </div>
+                            <div class="tooltip">
+                                <p>Copied <i class="fa-solid fa-check"></i></p>
+                                <div class="angle"></div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://github.com/SwordaxSy" target="_blank">
+                        <div class="card card-github">
+                            <i class="fa-brands fa-github contact-icon"></i>
+                            <div>
+                                <p>SwordaxSy</p>
+                                <span>Github</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://linktr.ee/swordax" target="_blank">
+                        <div class="card card-website">
+                            <i
+                                class="fa-solid fa-arrow-up-right-from-square contact-icon"
+                            ></i>
+                            <div>
+                                <p>swordax</p>
+                                <span>Linktree</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <section>
+                <h2>
+                    Or leave a <span>comment</span><br />
+                    <span class="pad-left">that everybody can see</span>
+                </h2>
+
+                <div class="comment-input">
+                    <!-- <input
+                        type="text"
+                        placeholder="Share your thoughts"
+                        maxlength="300"
+                        required
+                    /> -->
+                    <textarea placeholder="Share your thoughts" maxlength="300" required></textarea>
+                    <button title="Publish comment"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+
+                <div class="comments">
+                    <% comments.reverse().forEach((comment) => { %>
+                    <div class="comment">
+                        <div class="comment-header">
+                            <img
+                                src="./images/user-avatar.png"
+                                alt="User Avatar"
+                                class="user-avatar"
+                            />
+                            <div class="comment-header-text">
+                                <p class="username"><%= comment.commenter %></p>
+                                <p
+                                    class="publish-date"
+                                    data-date="<%= comment.createdAt %>"
+                                ></p>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p><%= comment.comment %></p>
+                        </div>
+                    </div>
+                    <% }); %>
+                    <h2 class="no-comments <%= comments.length === 0 ? "active" : "" %>">No Comments</h2>
+                </div>
+            </section>
+        </main>
+
+        <div class="comment-username-popup">
+            <div class="comment-username-box">
+                <h3>What's your lovely name?</h3>
+                <input
+                    type="text"
+                    placeholder="Potatoz Bin Tomatoz"
+                    class="comment-username-input"
+                    maxlength="24"
+                    required
+                />
+                <div class="buttons">
+                    <button class="confirm">
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                    <button class="disprove">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <%- include("partials/footer") %>
+
+        <!-- Script Files -->
+        <script src="./scripts/contact.js" type="module"></script>
+
+        <!-- Admin Command Script -->
+        <script>
+            // Delete Comments
+            let deleteCommentsLock = false;
+            function delete_comments(password) {
+                if (deleteCommentsLock) return false;
+                deleteCommentsLock = true;
+
+                const fetchOptions = {
+                    method: "DELETE",
+                    body: JSON.stringify({ password }),
+                    headers: { "Content-Type": "application/json" },
+                };
+
+                fetch("/delete_comments", fetchOptions)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.success) {
+                            console.log(`%c${data.message}`, "color: lime");
+                            document
+                                .querySelectorAll(".comments .comment")
+                                .forEach((comment) => comment.remove());
+                            document.querySelector(".no-comments").classList.add("active");
+                        } else {
+                            console.log(`%c${data.error}`, "color: orangered");
+                        }
+                    })
+                    .catch((err) => console.log(err))
+                    .finally(() => (deleteCommentsLock = false));
+            }
+        </script>
+    </body>
+</html>
